@@ -12,9 +12,7 @@ console.log('🔍 NoviSign Config:', {
 
 export async function pushToNoviSign(payload) {
   const bodyJson = JSON.stringify({
-    data: {
-      update: payload
-    }
+    data: payload
   });
 
   const url = `https://${DOMAIN}/catalog/items/${GROUP}`;
