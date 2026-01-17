@@ -3,6 +3,8 @@ node_modules/
 dist/
 build/
 .env
+.env.local
+.env.*.local
 
 # Logs
 npm-debug.log*
@@ -15,3 +17,11 @@ Thumbs.db
 
 # Project Specific
 text_adr.txt
+
+# Uploads
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Testing
+coverage/
+.nyc_output/

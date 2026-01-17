@@ -1,33 +1,74 @@
-import { getActiveAd } from './store.js';
-import { pushToNoviSign } from './novisign.js';
 import crypto from 'crypto';
+import { pushToNoviSign } from './novisign.js';
+import Advertisement from './models/Advertisement.js';
 
-let lastHash = null;
+let currentAdIndex = 0;
+
+/**
+ * Get all currently active advertisements from database
+ */
+async function getActiveAds() {
+  const now = new Date();
+
+  const ads = await Advertisement.find({
+    status: 'active',
+    start_time: { $lte: now },
+    end_time: { $gt: now },
+    $or: [
+      { stop_time: null },
+      { stop_time: { $gt: now } }
+    ]
+  }).populate('business_id', 'name').sort({ created_at: 1 }); // Sort by creation time for consistent order
+
+  return ads;
+}
 
 setInterval(async () => {
-  const ad = getActiveAd();
-
-  // Build a hash ONLY for change detection
-  const stateKey = ad ? JSON.stringify(ad) : 'NO_ACTIVE_AD';
-  const hash = crypto.createHash('sha1').update(stateKey).digest('hex');
-
-  // No change → do nothing
-  if (hash === lastHash) return;
-
-  lastHash = hash;
-
-  // 🚫 CRITICAL: never call NoviSign when no ad exists
-  if (!ad) {
-    console.log('ℹ️ No active ad — nothing sent to NoviSign');
-    return;
-  }
-
-  // ✅ Only here do we push
   try {
-    await pushToNoviSign(ad);
-    console.log('✅ Pushed to NoviSign:', ad.title);
-  } catch (err) {
-    console.error('❌ NoviSign push error:', err?.response?.data || err.message);
-  }
+    const ads = await getActiveAds();
 
+    // Always send to NoviSign every 5 seconds
+    if (!ads || ads.length === 0) {
+      // No active ads - send empty payload
+      const payload = {
+        ad: null
+      };
+
+      await pushToNoviSign(payload);
+      console.log('ℹ️  Sent to NoviSign: No active ads (empty payload)');
+      currentAdIndex = 0; // Reset index when no ads
+    } else {
+      // Rotate through ads - send one at a time
+      // Reset index if it's out of bounds (in case ads were deleted)
+      if (currentAdIndex >= ads.length) {
+        currentAdIndex = 0;
+      }
+
+      const currentAd = ads[currentAdIndex];
+
+      const payload = {
+        ad: {
+          id: currentAd._id,
+          businessId: currentAd.business_id._id,
+          businessName: currentAd.business_id.name,
+          title: currentAd.title,
+          shortText: currentAd.short_text,
+          promoText: currentAd.promo_text,
+          imageUrl: currentAd.image_path,
+          startAt: currentAd.start_time,
+          endAt: currentAd.end_time
+        }
+      };
+
+      await pushToNoviSign(payload);
+      console.log(`✅ Pushed to NoviSign [${currentAdIndex + 1}/${ads.length}]: ${currentAd.title}`);
+
+      // Move to next ad (loop back to start if at end)
+      currentAdIndex = (currentAdIndex + 1) % ads.length;
+    }
+  } catch (err) {
+    console.error('❌ Scheduler error:', err?.response?.data || err.message);
+  }
 }, 5000);
+
+console.log('⏰ Scheduler started - checking for active ads every 5 seconds');

@@ -1,21 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdvertisementModal.css';
 
-const AdvertisementModal = ({ isOpen, onClose }) => {
+const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
     business_id: '',
     title: '',
     short_text: '',
     promo_text: '',
-    image_path: '',
     start_time: '',
     end_time: '',
-    status: 'draft'
+    status: 'active'
   });
 
+  const [selectedFile, setSelectedFile] = useState(null);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [businesses, setBusinesses] = useState([]);
+  const [loadingBusinesses, setLoadingBusinesses] = useState(false);
+
+  // Fetch businesses when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      fetchBusinesses();
+    }
+  }, [isOpen]);
+
+  const fetchBusinesses = async () => {
+    try {
+      setLoadingBusinesses(true);
+      const response = await axios.get('http://localhost:3001/api/businesses');
+      setBusinesses(response.data.businesses || []);
+    } catch (error) {
+      console.error('Error fetching businesses:', error);
+      alert('שגיאה בטעינת רשימת העסקים');
+    } finally {
+      setLoadingBusinesses(false);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,12 +57,7 @@ const AdvertisementModal = ({ isOpen, onClose }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // In a real app, you would upload the file to the server here
-      // For now, we'll just store the file name
-      setFormData(prev => ({
-        ...prev,
-        image_path: file.name
-      }));
+      setSelectedFile(file);
     }
   };
 
@@ -82,35 +99,74 @@ const AdvertisementModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
-      // TODO: Replace with actual backend endpoint
-      const response = await axios.post('/api/advertisements', formData);
-      console.log('Advertisement created:', response.data);
-      
+      // Convert datetime-local to ISO format
+      const startTimeISO = new Date(formData.start_time).toISOString();
+      const endTimeISO = new Date(formData.end_time).toISOString();
+
+      // If there's a file, use FormData
+      if (selectedFile) {
+        const data = new FormData();
+        data.append('business_id', formData.business_id);
+        data.append('title', formData.title);
+        data.append('short_text', formData.short_text);
+        data.append('promo_text', formData.promo_text);
+        data.append('start_time', startTimeISO);
+        data.append('end_time', endTimeISO);
+        data.append('status', formData.status);
+        data.append('image', selectedFile);
+
+        const response = await axios.post('http://localhost:3001/api/advertisements', data, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        console.log('Advertisement created:', response.data);
+      } else {
+        // No file, send JSON
+        const response = await axios.post('http://localhost:3001/api/advertisements', {
+          business_id: formData.business_id,
+          title: formData.title,
+          short_text: formData.short_text,
+          promo_text: formData.promo_text,
+          start_time: startTimeISO,
+          end_time: endTimeISO,
+          status: formData.status
+        });
+        console.log('Advertisement created:', response.data);
+      }
+
       // Reset form and close modal
       setFormData({
         business_id: '',
         title: '',
         short_text: '',
         promo_text: '',
-        image_path: '',
         start_time: '',
         end_time: '',
-        status: 'draft'
+        status: 'active'
       });
+      setSelectedFile(null);
       setErrors({});
-      onClose();
       alert('הפרסומת נוספה בהצלחה!');
+
+      // Notify parent to refresh list
+      if (onSuccess) {
+        onSuccess();
+      }
+
+      onClose();
     } catch (error) {
       console.error('Error creating advertisement:', error);
-      alert('שגיאה בהוספת הפרסומת. אנא נסה שוב.');
+      const errorMsg = error.response?.data?.error || error.response?.data?.message || 'שגיאה בהוספת הפרסומת. אנא נסה שוב.';
+      alert(errorMsg);
     } finally {
       setIsSubmitting(false);
     }
@@ -128,16 +184,31 @@ const AdvertisementModal = ({ isOpen, onClose }) => {
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="business_id">מזהה עסק *</label>
-            <input
-              type="text"
-              id="business_id"
-              name="business_id"
-              value={formData.business_id}
-              onChange={handleChange}
-              className={errors.business_id ? 'error' : ''}
-              placeholder="הזן מזהה עסק"
-            />
+            <label htmlFor="business_id">בחר עסק *</label>
+            {loadingBusinesses ? (
+              <div style={{ padding: '10px', textAlign: 'center', color: '#666' }}>
+                טוען עסקים...
+              </div>
+            ) : businesses.length === 0 ? (
+              <div style={{ padding: '10px', color: '#e74c3c', background: '#fee', borderRadius: '4px' }}>
+                אין עסקים במערכת. אנא הוסף עסק תחילה.
+              </div>
+            ) : (
+              <select
+                id="business_id"
+                name="business_id"
+                value={formData.business_id}
+                onChange={handleChange}
+                className={errors.business_id ? 'error' : ''}
+              >
+                <option value="">בחר עסק...</option>
+                {businesses.map(business => (
+                  <option key={business.business_id} value={business.business_id}>
+                    {business.name} ({business.business_code})
+                  </option>
+                ))}
+              </select>
+            )}
             {errors.business_id && <span className="error-message">{errors.business_id}</span>}
           </div>
 
@@ -184,18 +255,21 @@ const AdvertisementModal = ({ isOpen, onClose }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="image">תמונה</label>
+            <label htmlFor="image">תמונה (אופציונלי)</label>
             <input
               type="file"
               id="image"
               name="image"
               onChange={handleFileChange}
-              accept="image/*"
+              accept="image/jpeg,image/png,image/gif,image/webp"
               className="file-input"
             />
-            {formData.image_path && (
-              <span className="file-name">קובץ נבחר: {formData.image_path}</span>
+            {selectedFile && (
+              <span className="file-name">קובץ נבחר: {selectedFile.name}</span>
             )}
+            <small style={{display: 'block', marginTop: '5px', color: '#666'}}>
+              קבצים נתמכים: JPG, PNG, GIF, WebP (מקסימום 5MB)
+            </small>
           </div>
 
           <div className="form-row">
@@ -234,8 +308,8 @@ const AdvertisementModal = ({ isOpen, onClose }) => {
               value={formData.status}
               onChange={handleChange}
             >
-              <option value="draft">טיוטה</option>
               <option value="active">פעיל</option>
+              <option value="draft">טיוטה</option>
               <option value="disabled">מושבת</option>
             </select>
           </div>

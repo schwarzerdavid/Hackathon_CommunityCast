@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import BusinessModal from './components/BusinessModal';
 import AdvertisementModal from './components/AdvertisementModal';
+import AdList from './components/AdList';
 import './App.css';
 
 function App() {
   const [isBusinessModalOpen, setIsBusinessModalOpen] = useState(false);
   const [isAdModalOpen, setIsAdModalOpen] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const handleAdSuccess = () => {
+    // Trigger refresh of ad list
+    setRefreshTrigger(prev => prev + 1);
+  };
 
   return (
     <div className="App">
@@ -46,19 +53,23 @@ function App() {
           </div>
         </div>
 
+        {/* Advertisement List */}
+        <AdList refreshTrigger={refreshTrigger} />
+
         <footer className="footer">
           <p>© 2026 CommunityCast. All rights reserved.</p>
         </footer>
       </div>
 
-      <BusinessModal 
-        isOpen={isBusinessModalOpen} 
-        onClose={() => setIsBusinessModalOpen(false)} 
+      <BusinessModal
+        isOpen={isBusinessModalOpen}
+        onClose={() => setIsBusinessModalOpen(false)}
       />
-      
-      <AdvertisementModal 
-        isOpen={isAdModalOpen} 
-        onClose={() => setIsAdModalOpen(false)} 
+
+      <AdvertisementModal
+        isOpen={isAdModalOpen}
+        onClose={() => setIsAdModalOpen(false)}
+        onSuccess={handleAdSuccess}
       />
     </div>
   );

@@ -4,7 +4,6 @@ import './BusinessModal.css';
 
 const BusinessModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
-    business_code: '',
     name: '',
     contact_info: ''
   });
@@ -29,15 +28,11 @@ const BusinessModal = ({ isOpen, onClose }) => {
 
   const validateForm = () => {
     const newErrors = {};
-    
-    if (!formData.business_code.trim()) {
-      newErrors.business_code = 'קוד גישה הוא שדה חובה';
-    }
-    
+
     if (!formData.name.trim()) {
       newErrors.name = 'שם העסק הוא שדה חובה';
     }
-    
+
     if (!formData.contact_info.trim()) {
       newErrors.contact_info = 'פרטי קשר הם שדה חובה';
     }
@@ -48,30 +43,33 @@ const BusinessModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
-      // TODO: Replace with actual backend endpoint
-      const response = await axios.post('/api/businesses', formData);
+      const response = await axios.post('http://localhost:3001/api/businesses', formData);
       console.log('Business created:', response.data);
-      
-      // Reset form and close modal
+
+      const businessCode = response.data.business?.business_code;
+
+      // Reset form
       setFormData({
-        business_code: '',
         name: '',
         contact_info: ''
       });
       setErrors({});
+
+      // Show success message with generated code
+      alert(`העסק נוסף בהצלחה!\n\nקוד גישה לעסק: ${businessCode}\n\nשמור קוד זה - הוא נחוץ ליצירת מודעות`);
       onClose();
-      alert('העסק נוסף בהצלחה!');
     } catch (error) {
       console.error('Error creating business:', error);
-      alert('שגיאה בהוספת העסק. אנא נסה שוב.');
+      const errorMsg = error.response?.data?.error || 'שגיאה בהוספת העסק. אנא נסה שוב.';
+      alert(errorMsg);
     } finally {
       setIsSubmitting(false);
     }
@@ -89,20 +87,6 @@ const BusinessModal = ({ isOpen, onClose }) => {
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="business_code">קוד גישה (Token) *</label>
-            <input
-              type="text"
-              id="business_code"
-              name="business_code"
-              value={formData.business_code}
-              onChange={handleChange}
-              className={errors.business_code ? 'error' : ''}
-              placeholder="הזן קוד גישה לבעל העסק"
-            />
-            {errors.business_code && <span className="error-message">{errors.business_code}</span>}
-          </div>
-
-          <div className="form-group">
             <label htmlFor="name">שם העסק *</label>
             <input
               type="text"
@@ -114,6 +98,16 @@ const BusinessModal = ({ isOpen, onClose }) => {
               placeholder="הזן שם העסק"
             />
             {errors.name && <span className="error-message">{errors.name}</span>}
+          </div>
+
+          <div className="info-message" style={{
+            padding: '10px',
+            backgroundColor: '#e7f3ff',
+            borderRadius: '4px',
+            marginBottom: '15px',
+            fontSize: '14px'
+          }}>
+            💡 קוד גישה ייווצר אוטומטית עבור העסק
           </div>
 
           <div className="form-group">

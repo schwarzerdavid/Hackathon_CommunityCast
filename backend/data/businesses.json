@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "20064b53-4e12-4ab6-a60f-a6b08e40ae4c",
+    "business_code": "WU7RB6KX",
+    "name": "Test Bakery",
+    "contact_info": "test@bakery.com, 050-1234567",
+    "created_at": "2026-01-15T09:09:14.551Z",
+    "updated_at": "2026-01-15T09:09:14.551Z"
+  },
+  {
+    "_id": "45e6842e-e83e-4dd1-98b5-873112fcac88",
+    "business_code": "I9VG2X8J",
+    "name": "Test Business",
+    "contact_info": "test@test.com",
+    "created_at": "2026-01-15T18:02:30.816Z",
+    "updated_at": "2026-01-15T18:02:30.816Z"
+  },
+  {
+    "_id": "97004643-988f-4dc4-9860-29f14d2cc2a3",
+    "business_code": "95P5XQEV",
+    "name": "עסק 1",
+    "contact_info": "מספר טלפון 1",
+    "created_at": "2026-01-15T18:18:42.649Z",
+    "updated_at": "2026-01-15T18:18:42.649Z"
+  }
+]
