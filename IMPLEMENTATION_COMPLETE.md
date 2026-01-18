@@ -92,19 +92,14 @@ The `.env` file currently has a placeholder cluster name. You need to update it:
 
 **File:** `/home/schwarzer/projects/CommunityCast/backend/.env`
 
-**Current:**
-```env
-MONGODB_URI=mongodb+srv://schwarzerdavid_db_user:QJQYB7Wb5538X8Wz@cluster0.mongodb.net/communitycast?retryWrites=true&w=majority
-```
-
 **Action Required:**
 1. Go to https://cloud.mongodb.com
-2. Find your cluster name (probably NOT "cluster0")
-3. Update the connection string with your actual cluster name
+2. Copy your connection string from the "Connect" button
+3. Update the `MONGODB_URI` in your `.env` file with your actual connection string
 
-For example, if your cluster is named `mycluster`:
+**Example format:**
 ```env
-MONGODB_URI=mongodb+srv://schwarzerdavid_db_user:QJQYB7Wb5538X8Wz@mycluster.mongodb.net/communitycast?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://your-username:your-password@your-cluster.mongodb.net/communitycast?retryWrites=true&w=majority
 ```
 
 ### 2. (Optional) Configure NoviSign Credentials
