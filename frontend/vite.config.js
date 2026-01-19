@@ -8,7 +8,7 @@ export default defineConfig({
     port: process.env.PORT || 3000, // Use Render's PORT environment variable
     proxy: {
       '/api': {
-        target: process.env.API_URL || 'http://localhost:3001',
+        target: process.env.API_URL || 'https://hackathon-communitycast.onrender.com',
         changeOrigin: true
       }
     }
