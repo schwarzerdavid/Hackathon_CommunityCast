@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 import './AdvertisementModal.css';
 
 const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
@@ -29,7 +30,7 @@ const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
   const fetchBusinesses = async () => {
     try {
       setLoadingBusinesses(true);
-      const response = await axios.get('http://localhost:3001/api/businesses');
+      const response = await axios.get(`${API_URL}/api/businesses`);
       setBusinesses(response.data.businesses || []);
     } catch (error) {
       console.error('Error fetching businesses:', error);
@@ -123,7 +124,7 @@ const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
         data.append('status', formData.status);
         data.append('image', selectedFile);
 
-        const response = await axios.post('http://localhost:3001/api/advertisements', data, {
+        const response = await axios.post(`${API_URL}/api/advertisements`, data, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -131,7 +132,7 @@ const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
         console.log('Advertisement created:', response.data);
       } else {
         // No file, send JSON
-        const response = await axios.post('http://localhost:3001/api/advertisements', {
+        const response = await axios.post(`${API_URL}/api/advertisements`, {
           business_id: formData.business_id,
           title: formData.title,
           short_text: formData.short_text,

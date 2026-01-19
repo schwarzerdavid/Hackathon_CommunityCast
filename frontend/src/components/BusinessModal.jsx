@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 import './BusinessModal.css';
 
 const BusinessModal = ({ isOpen, onClose }) => {
@@ -51,7 +52,7 @@ const BusinessModal = ({ isOpen, onClose }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/businesses', formData);
+      const response = await axios.post(`${API_URL}/api/businesses`, formData);
       console.log('Business created:', response.data);
 
       const businessCode = response.data.business?.business_code;

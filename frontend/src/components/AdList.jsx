@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 import './AdList.css';
 
 const AdList = ({ refreshTrigger }) => {
@@ -18,11 +19,11 @@ const AdList = ({ refreshTrigger }) => {
       setError(null);
 
       // Fetch advertisements
-      const adsResponse = await axios.get('http://localhost:3001/api/advertisements');
+      const adsResponse = await axios.get(`${API_URL}/api/advertisements`);
       const adsData = adsResponse.data.advertisements || [];
 
       // Fetch businesses
-      const businessesResponse = await axios.get('http://localhost:3001/api/businesses');
+      const businessesResponse = await axios.get(`${API_URL}/api/businesses`);
       const businessesData = businessesResponse.data.businesses || [];
 
       // Create a map of business_id -> business_name
@@ -45,7 +46,7 @@ const AdList = ({ refreshTrigger }) => {
     try {
       const newStatus = currentStatus === 'active' ? 'disabled' : 'active';
 
-      await axios.put(`http://localhost:3001/api/advertisements/${adId}`, {
+      await axios.put(`${API_URL}/api/advertisements/${adId}`, {
         status: newStatus
       });
 
@@ -63,7 +64,7 @@ const AdList = ({ refreshTrigger }) => {
     }
 
     try {
-      await axios.delete(`http://localhost:3001/api/advertisements/${adId}`);
+      await axios.delete(`${API_URL}/api/advertisements/${adId}`);
       // Refresh the list
       fetchAds();
     } catch (err) {
@@ -122,7 +123,7 @@ const AdList = ({ refreshTrigger }) => {
               {ad.image_path && (
                 <div className="ad-image-container">
                   <img
-                    src={`http://localhost:3001/${ad.image_path}`}
+                    src={`${API_URL}/${ad.image_path}`}
                     alt={ad.title}
                     className="ad-image"
                     onError={(e) => {
