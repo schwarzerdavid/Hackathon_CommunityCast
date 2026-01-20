@@ -49,13 +49,15 @@ setInterval(async () => {
       const currentAd = ads[currentAdIndex];
 
       const payload = {
-        id: currentAd._id,
-        businessId: currentAd.business_id._id,
-        businessName: currentAd.business_id.name,
-        title: currentAd.title,
-        imageUrl: currentAd.image_path,
-        startAt: currentAd.start_time,
-        endAt: currentAd.end_time
+        ad: {
+          id: currentAd._id,
+          businessId: currentAd.business_id._id,
+          businessName: currentAd.business_id.name,
+          title: currentAd.title,
+          imageUrl: currentAd.image_path,
+          startAt: currentAd.start_time,
+          endAt: currentAd.end_time
+        }
       };
 
       await pushToNoviSign(payload);
