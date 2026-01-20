@@ -24,14 +24,6 @@ export const createAdvertisementSchema = Joi.object({
       'string.empty': 'Title is required',
       'string.min': 'Title must be at least 3 characters'
     }),
-  short_text: Joi.string().trim().min(5).max(200).required()
-    .messages({
-      'string.empty': 'Short text is required'
-    }),
-  promo_text: Joi.string().trim().min(10).max(1000).required()
-    .messages({
-      'string.empty': 'Promotion text is required'
-    }),
   start_time: Joi.date().iso().required()
     .messages({
       'date.base': 'Start time must be a valid date'
