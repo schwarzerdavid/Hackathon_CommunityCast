@@ -28,12 +28,12 @@ class AdvertisementModel {
     if (!this.title || this.title.trim().length === 0) {
       throw new Error('title is required');
     }
-    if (!this.short_text) {
-      throw new Error('short_text is required');
-    }
-    if (!this.promo_text) {
-      throw new Error('promo_text is required');
-    }
+    // if (!this.short_text) {
+    //   throw new Error('short_text is required');
+    // }
+    // if (!this.promo_text) {
+    //   throw new Error('promo_text is required');
+    // }
     if (!this.start_time) {
       throw new Error('start_time is required');
     }
