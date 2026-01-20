@@ -31,7 +31,9 @@ setInterval(async () => {
     if (!ads || ads.length === 0) {
       // No active ads - send empty payload
       const payload = {
-        ad: null
+        ad: {
+          imageUrl: 'uploads/no-ad.png',
+        }
       };
 
       await pushToNoviSign(payload);
@@ -47,17 +49,13 @@ setInterval(async () => {
       const currentAd = ads[currentAdIndex];
 
       const payload = {
-        ad: {
-          id: currentAd._id,
-          businessId: currentAd.business_id._id,
-          businessName: currentAd.business_id.name,
-          title: currentAd.title,
-          shortText: currentAd.short_text,
-          promoText: currentAd.promo_text,
-          imageUrl: currentAd.image_path,
-          startAt: currentAd.start_time,
-          endAt: currentAd.end_time
-        }
+        id: currentAd._id,
+        businessId: currentAd.business_id._id,
+        businessName: currentAd.business_id.name,
+        title: currentAd.title,
+        imageUrl: currentAd.image_path,
+        startAt: currentAd.start_time,
+        endAt: currentAd.end_time
       };
 
       await pushToNoviSign(payload);
