@@ -59,13 +59,10 @@ frontend/
 - `ad_id`: Unique identifier (auto-generated)
 - `business_id`: Reference to business
 - `title`: Advertisement title
-- `short_text`: Brief text for board view
-- `promo_text`: Detailed promotion text for spotlight view
 - `image_path`: Path to advertisement image
 - `start_time`: Advertisement start date/time
 - `end_time`: Advertisement end date/time
 - `stop_time`: Actual stop date/time (if manually stopped)
-- `status`: Status (active / disabled / draft)
 
 ## Backend Integration
 

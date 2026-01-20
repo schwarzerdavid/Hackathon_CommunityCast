@@ -94,11 +94,8 @@ Connections                   ttl     opn     rt1     rt5     p50     p90
 curl -X POST https://abc123.ngrok-free.app/api/advertisements \
   -F "business_id=YOUR_BUSINESS_ID" \
   -F "title=Test Ad" \
-  -F "short_text=Short text" \
-  -F "promo_text=Promo text here" \
   -F "start_time=2026-01-15T09:00:00.000Z" \
   -F "end_time=2026-01-15T23:59:59.000Z" \
-  -F "status=active" \
   -F "image=@/path/to/your/image.jpg"
 ```
 
@@ -326,12 +323,9 @@ curl -X POST $NGROK_URL/api/advertisements \
   -d '{
     "business_id": "xxx",
     "title": "Sale",
-    "short_text": "50% off",
-    "promo_text": "Amazing",
     "image_path": "https://images.unsplash.com/photo-123/image.jpg",
     "start_time": "2026-01-15T09:00:00.000Z",
-    "end_time": "2026-01-15T23:59:59.000Z",
-    "status": "active"
+    "end_time": "2026-01-15T23:59:59.000Z"
   }'
 ```
 

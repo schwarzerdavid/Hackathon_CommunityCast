@@ -22,10 +22,7 @@ The entity containing the marketing content and display logic.
 *   `ad_id`: Unique identifier for the advertisement.
 *   `business_id`: Reference to the Business entity.
 *   `title`: Advertisement title (e.g., "End of Season Sale").
-*   `short_text`: Concise text for the "Board View" display.
-*   `promo_text`: Detailed promotion text for the "Spotlight View" display.
 *   `image_path`: Path to the image file stored on the server.
 *   `start_time`: Date and time when advertising begins.
 *   `end_time`: Date and time when advertising ends.
 *   `stop_time`: Actual date and time when advertising ceased (e.g., if manually stopped).
-*   `status`: Advertisement status (active / disabled / draft).

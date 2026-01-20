@@ -44,17 +44,12 @@ const AdList = ({ refreshTrigger }) => {
 
   const toggleStatus = async (adId, currentStatus) => {
     try {
-      const newStatus = currentStatus === 'active' ? 'disabled' : 'active';
-
-      await axios.put(`${API_URL}/api/advertisements/${adId}`, {
-        status: newStatus
-      });
-
+      await axios.delete(`${API_URL}/api/advertisements/${adId}`);
       // Refresh the list
       fetchAds();
     } catch (err) {
-      console.error('Error toggling status:', err);
-      alert('שגיאה בשינוי סטטוס הפרסומת');
+      console.error('Error stopping advertisement:', err);
+      alert('שגיאה בעצירת הפרסומת');
     }
   };
 
@@ -85,8 +80,6 @@ const AdList = ({ refreshTrigger }) => {
   };
 
   const isAdActive = (ad) => {
-    if (ad.status !== 'active') return false;
-
     const now = new Date();
     const start = new Date(ad.start_time);
     const end = new Date(ad.end_time);
@@ -114,9 +107,6 @@ const AdList = ({ refreshTrigger }) => {
           <div key={ad.ad_id} className={`ad-card ${isAdActive(ad) ? 'active' : 'inactive'}`}>
             <div className="ad-header">
               <h3>{ad.title}</h3>
-              <span className={`status-badge ${ad.status}`}>
-                {ad.status === 'active' ? 'פעיל' : ad.status === 'draft' ? 'טיוטה' : 'מושבת'}
-              </span>
             </div>
 
             <div className="ad-body">
@@ -140,9 +130,6 @@ const AdList = ({ refreshTrigger }) => {
                 <strong>עסק:</strong> {businesses[ad.business_id] || 'לא ידוע'}
               </div>
               <div className="ad-info">
-                <strong>טקסט קצר:</strong> {ad.short_text}
-              </div>
-              <div className="ad-info">
                 <strong>זמן תצוגה:</strong>
                 <br />
                 {formatDateTime(ad.start_time)} - {formatDateTime(ad.end_time)}
@@ -153,12 +140,6 @@ const AdList = ({ refreshTrigger }) => {
             </div>
 
             <div className="ad-actions">
-              <button
-                className={`btn-toggle ${ad.status === 'active' ? 'btn-disable' : 'btn-enable'}`}
-                onClick={() => toggleStatus(ad.ad_id, ad.status)}
-              >
-                {ad.status === 'active' ? '⏸️ השבת' : '▶️ הפעל'}
-              </button>
               <button
                 className="btn-delete"
                 onClick={() => deleteAd(ad.ad_id)}
