@@ -73,13 +73,12 @@ class AdvertisementModel {
     }
 
     console.log("addAd: saving ad: " + JSON.stringify(adData, null, 2));
-    console.log("addAd: Number of ads: " + ads.length);
 
     writeData(FILENAME, advertisements);
 
     console.log("addAd: saved ad: " + JSON.stringify(adData, null, 2));
     console.log("addAd: Number of ads: " + advertisements.length);
-    
+
     return this;
   }
 
