@@ -29,9 +29,12 @@ setInterval(async () => {
 
     // Always send to NoviSign every 5 seconds
     if (!ads || ads.length === 0) {
+      console.log('ℹ️  No active ads - sending empty payload');
       // No active ads - send empty payload
       const payload = {
-        ad: null
+        ad: {
+          imageUrl: 'uploads/no-ad.png',
+        }
       };
 
       await pushToNoviSign(payload);
@@ -52,14 +55,13 @@ setInterval(async () => {
           businessId: currentAd.business_id._id,
           businessName: currentAd.business_id.name,
           title: currentAd.title,
-          shortText: currentAd.short_text,
-          promoText: currentAd.promo_text,
           imageUrl: currentAd.image_path,
           startAt: currentAd.start_time,
           endAt: currentAd.end_time
         }
       };
 
+      console.log(`✅ Pusing to NoviSign [${currentAdIndex + 1}/${ads.length}]: ${currentAd.title}`);
       await pushToNoviSign(payload);
       console.log(`✅ Pushed to NoviSign [${currentAdIndex + 1}/${ads.length}]: ${currentAd.title}`);
 

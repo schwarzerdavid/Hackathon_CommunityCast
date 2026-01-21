@@ -56,13 +56,10 @@ All data is stored in JSON files in the `backend/data/` directory:
     "_id": "uuid",
     "business_id": "business-uuid",
     "title": "Summer Sale",
-    "short_text": "50% off all items",
-    "promo_text": "Visit us today for amazing discounts!",
     "image_path": null,
     "start_time": "2026-01-15T09:00:00.000Z",
     "end_time": "2026-01-15T23:59:59.000Z",
     "stop_time": null,
-    "status": "active",
     "created_at": "2026-01-15T09:09:24.914Z",
     "updated_at": "2026-01-15T09:09:24.914Z"
   }

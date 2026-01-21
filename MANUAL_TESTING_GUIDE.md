@@ -99,12 +99,9 @@ If you started the frontend (http://localhost:3000), you can test using the visu
 2. Fill in the form:
    - **מזהה עסק** (Business ID): Paste the business_id from the previous step
    - **כותרת הפרסומת** (Title): e.g., "Summer Sale"
-   - **טקסט תמציתי** (Short Text): e.g., "50% off all items"
-   - **פירוט המבצע** (Promo Text): e.g., "Visit us today for amazing discounts!"
    - **תמונה** (Image): Optionally upload an image (JPG, PNG, GIF, WebP - max 5MB)
    - **תאריך ושעת התחלה** (Start Time): Select start date/time
    - **תאריך ושעת סיום** (End Time): Select end date/time
-   - **סטטוס** (Status): Leave as "פעיל" (Active)
 3. Click **"שמור"** (Save)
 4. You'll see a success message
 
@@ -173,11 +170,8 @@ curl -X POST http://localhost:3001/api/advertisements \
   -d '{
     "business_id": "BUSINESS_ID",
     "title": "Summer Sale",
-    "short_text": "50% off all items",
-    "promo_text": "Visit us today for amazing summer discounts on all bakery items!",
     "start_time": "2026-01-15T11:00:00.000Z",
-    "end_time": "2026-01-15T23:59:59.000Z",
-    "status": "active"
+    "end_time": "2026-01-15T23:59:59.000Z"
   }'
 ```
 
@@ -190,12 +184,9 @@ curl -X POST http://localhost:3001/api/advertisements \
     "ad_id": "97270eea-8269-4bf4-865c-00a3c8de59ea",
     "business_id": "20064b53-4e12-4ab6-a60f-a6b08e40ae4c",
     "title": "Summer Sale",
-    "short_text": "50% off all items",
-    "promo_text": "Visit us today for amazing summer discounts on all bakery items!",
     "image_path": null,
     "start_time": "2026-01-15T11:00:00.000Z",
     "end_time": "2026-01-15T23:59:59.000Z",
-    "status": "active",
     "created_at": "2026-01-15T10:55:00.000Z"
   }
 }
@@ -217,11 +208,8 @@ cat backend/data/advertisements.json
 curl -X POST http://localhost:3001/api/advertisements \
   -F "business_id=BUSINESS_ID" \
   -F "title=Weekend Special" \
-  -F "short_text=Fresh bread 30% off" \
-  -F "promo_text=Get fresh baked bread at 30% discount this weekend only!" \
   -F "start_time=2026-01-15T11:00:00.000Z" \
   -F "end_time=2026-01-15T23:59:59.000Z" \
-  -F "status=active" \
   -F "image=@/path/to/image.jpg"
 ```
 
@@ -528,8 +516,8 @@ Check that all required fields are provided and meet validation requirements:
 
 ✅ **Data Models**
 - Business: business_code (8-char unique), name, contact_info, timestamps
-- Advertisement: business_id, title, short_text, promo_text, image_path, start_time, end_time, stop_time, status, timestamps
-- Field validation (required fields, date ranges, status enum)
+- Advertisement: business_id, title, image_path, start_time, end_time, stop_time, timestamps
+- Field validation (required fields, date ranges)
 - Date validation (end_time must be after start_time)
 
 ✅ **File Storage Features**

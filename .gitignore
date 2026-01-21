@@ -19,7 +19,7 @@ Thumbs.db
 text_adr.txt
 
 # Uploads
-backend/uploads/*
+!backend/uploads/*
 !backend/uploads/.gitkeep
 
 # Testing

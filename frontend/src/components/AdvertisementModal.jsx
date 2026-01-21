@@ -7,11 +7,8 @@ const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
     business_id: '',
     title: '',
-    short_text: '',
-    promo_text: '',
     start_time: '',
-    end_time: '',
-    status: 'active'
+    end_time: ''
   });
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -73,14 +70,6 @@ const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
       newErrors.title = 'כותרת היא שדה חובה';
     }
     
-    if (!formData.short_text.trim()) {
-      newErrors.short_text = 'טקסט תמציתי הוא שדה חובה';
-    }
-    
-    if (!formData.promo_text.trim()) {
-      newErrors.promo_text = 'פירוט המבצע הוא שדה חובה';
-    }
-    
     if (!formData.start_time) {
       newErrors.start_time = 'תאריך התחלה הוא שדה חובה';
     }
@@ -117,11 +106,8 @@ const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
         const data = new FormData();
         data.append('business_id', formData.business_id);
         data.append('title', formData.title);
-        data.append('short_text', formData.short_text);
-        data.append('promo_text', formData.promo_text);
         data.append('start_time', startTimeISO);
         data.append('end_time', endTimeISO);
-        data.append('status', formData.status);
         data.append('image', selectedFile);
 
         const response = await axios.post(`${API_URL}/api/advertisements`, data, {
@@ -135,11 +121,8 @@ const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
         const response = await axios.post(`${API_URL}/api/advertisements`, {
           business_id: formData.business_id,
           title: formData.title,
-          short_text: formData.short_text,
-          promo_text: formData.promo_text,
           start_time: startTimeISO,
-          end_time: endTimeISO,
-          status: formData.status
+          end_time: endTimeISO
         });
         console.log('Advertisement created:', response.data);
       }
@@ -148,11 +131,8 @@ const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
       setFormData({
         business_id: '',
         title: '',
-        short_text: '',
-        promo_text: '',
         start_time: '',
-        end_time: '',
-        status: 'active'
+        end_time: ''
       });
       setSelectedFile(null);
       setErrors({});
@@ -228,34 +208,6 @@ const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="short_text">טקסט תמציתי (ללוח המרוכז) *</label>
-            <textarea
-              id="short_text"
-              name="short_text"
-              value={formData.short_text}
-              onChange={handleChange}
-              className={errors.short_text ? 'error' : ''}
-              placeholder="טקסט קצר לתצוגה בלוח"
-              rows="2"
-            />
-            {errors.short_text && <span className="error-message">{errors.short_text}</span>}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="promo_text">פירוט המבצע (לרוטציה) *</label>
-            <textarea
-              id="promo_text"
-              name="promo_text"
-              value={formData.promo_text}
-              onChange={handleChange}
-              className={errors.promo_text ? 'error' : ''}
-              placeholder="פירוט מלא של המבצע"
-              rows="4"
-            />
-            {errors.promo_text && <span className="error-message">{errors.promo_text}</span>}
-          </div>
-
-          <div className="form-group">
             <label htmlFor="image">תמונה (אופציונלי)</label>
             <input
               type="file"
@@ -299,20 +251,6 @@ const AdvertisementModal = ({ isOpen, onClose, onSuccess }) => {
               />
               {errors.end_time && <span className="error-message">{errors.end_time}</span>}
             </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="status">סטטוס *</label>
-            <select
-              id="status"
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-            >
-              <option value="active">פעיל</option>
-              <option value="draft">טיוטה</option>
-              <option value="disabled">מושבת</option>
-            </select>
           </div>
 
           <div className="modal-footer">
