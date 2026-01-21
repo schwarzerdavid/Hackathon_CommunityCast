@@ -29,6 +29,7 @@ setInterval(async () => {
 
     // Always send to NoviSign every 5 seconds
     if (!ads || ads.length === 0) {
+      console.log('ℹ️  No active ads - sending empty payload');
       // No active ads - send empty payload
       const payload = {
         ad: {
@@ -60,6 +61,7 @@ setInterval(async () => {
         }
       };
 
+      console.log(`✅ Pusing to NoviSign [${currentAdIndex + 1}/${ads.length}]: ${currentAd.title}`);
       await pushToNoviSign(payload);
       console.log(`✅ Pushed to NoviSign [${currentAdIndex + 1}/${ads.length}]: ${currentAd.title}`);
 
