@@ -11,7 +11,6 @@ async function getActiveAds() {
   const now = new Date();
 
   const ads = await Advertisement.find({
-    status: 'active',
     start_time: { $lte: now },
     end_time: { $gt: now },
     $or: [
