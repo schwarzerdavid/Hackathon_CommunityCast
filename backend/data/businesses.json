@@ -2,25 +2,73 @@
   {
     "_id": "20064b53-4e12-4ab6-a60f-a6b08e40ae4c",
     "business_code": "WU7RB6KX",
-    "name": "Test Bakery",
-    "contact_info": "test@bakery.com, 050-1234567",
+    "name": "מאפיית לחם הארץ",
+    "contact_info": "lechem@email.co.il, 050-1234567",
     "created_at": "2026-01-15T09:09:14.551Z",
     "updated_at": "2026-01-15T09:09:14.551Z"
   },
   {
     "_id": "45e6842e-e83e-4dd1-98b5-873112fcac88",
     "business_code": "I9VG2X8J",
-    "name": "Test Business",
-    "contact_info": "test@test.com",
+    "name": "קפה גרג",
+    "contact_info": "greg@cafe.co.il, 052-9876543",
     "created_at": "2026-01-15T18:02:30.816Z",
     "updated_at": "2026-01-15T18:02:30.816Z"
   },
   {
     "_id": "97004643-988f-4dc4-9860-29f14d2cc2a3",
     "business_code": "95P5XQEV",
-    "name": "עסק 1",
-    "contact_info": "מספר טלפון 1",
+    "name": "בוטיק הלבשה - סטייל",
+    "contact_info": "style@fashion.co.il, 054-5551234",
     "created_at": "2026-01-15T18:18:42.649Z",
     "updated_at": "2026-01-15T18:18:42.649Z"
+  },
+  {
+    "_id": "87ab4a76-cc48-43aa-a4ea-b0f65f075a56",
+    "business_code": "S1V9N3DT",
+    "name": "פיצה נאפולי",
+    "contact_info": "napoli@pizza.co.il, 053-7778888",
+    "created_at": "2026-01-18T22:22:32.658Z",
+    "updated_at": "2026-01-18T22:22:32.658Z"
+  },
+  {
+    "_id": "4befd877-7daf-4b6e-b4e2-96c44e1520ce",
+    "business_code": "EI1DXIJW",
+    "name": "חנות הצעצועים - ילדים שמחים",
+    "contact_info": "toys@kids.co.il, 050-3332211",
+    "created_at": "2026-01-18T22:33:20.615Z",
+    "updated_at": "2026-01-18T22:33:20.615Z"
+  },
+  {
+    "_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "business_code": "KL3MN7PQ",
+    "name": "סושי טוקיו",
+    "contact_info": "tokyo@sushi.co.il, 052-4445566",
+    "created_at": "2026-01-19T10:00:00.000Z",
+    "updated_at": "2026-01-19T10:00:00.000Z"
+  },
+  {
+    "_id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
+    "business_code": "RS4TU8VW",
+    "name": "מספרת שיער - ניו לוק",
+    "contact_info": "newlook@hair.co.il, 054-6667788",
+    "created_at": "2026-01-19T10:30:00.000Z",
+    "updated_at": "2026-01-19T10:30:00.000Z"
+  },
+  {
+    "_id": "c3d4e5f6-a7b8-9012-cdef-345678901234",
+    "business_code": "XY5ZA9BC",
+    "name": "גלידה איטלקית - דולצ׳ה",
+    "contact_info": "dolce@gelato.co.il, 053-8889900",
+    "created_at": "2026-01-19T11:00:00.000Z",
+    "updated_at": "2026-01-19T11:00:00.000Z"
+  },
+  {
+    "_id": "2c08d86a-d483-4f64-99f7-08ae56f0c10c",
+    "business_code": "X3N17GQ9",
+    "name": "KG Center",
+    "contact_info": "משרד: 00-000000",
+    "created_at": "2026-01-20T12:53:14.850Z",
+    "updated_at": "2026-01-20T12:53:14.850Z"
   }
 ]

@@ -1,44 +1,16 @@
 [
   {
-    "_id": "97270eea-8269-4bf4-865c-00a3c8de59ea",
-    "business_id": "20064b53-4e12-4ab6-a60f-a6b08e40ae4c",
-    "title": "Summer Sale",
-    "short_text": "50% off all items",
-    "promo_text": "Visit us today for amazing summer discounts on all bakery items!",
-    "image_path": null,
-    "start_time": "2026-01-15T09:00:00.000Z",
-    "end_time": "2026-01-15T23:59:59.000Z",
+    "_id": "97f3f2a2-858a-460e-8a89-f73f83a3caef",
+    "business_id": "2c08d86a-d483-4f64-99f7-08ae56f0c10c",
+    "title": "פעילויות השבוע",
+    "short_text": "",
+    "promo_text": "",
+    "image_path": "uploads/WhatsApp Image 2026-01-19 at 21.47.39-1768913959092-e04f429a7a3f.jpeg",
+    "start_time": "2026-01-18T12:59:00.000Z",
+    "end_time": "2026-01-24T12:59:00.000Z",
     "stop_time": null,
     "status": "active",
-    "created_at": "2026-01-15T09:09:24.914Z",
-    "updated_at": "2026-01-15T09:09:24.914Z"
-  },
-  {
-    "_id": "23915e68-5590-449b-b6b3-16606f6bd93e",
-    "business_id": "45e6842e-e83e-4dd1-98b5-873112fcac88",
-    "title": "Test Ad",
-    "short_text": "Short",
-    "promo_text": "Promo text",
-    "image_path": null,
-    "start_time": "2026-01-15T09:00:00.000Z",
-    "end_time": "2026-01-15T23:59:59.000Z",
-    "stop_time": null,
-    "status": "active",
-    "created_at": "2026-01-15T18:02:37.275Z",
-    "updated_at": "2026-01-15T18:02:37.275Z"
-  },
-  {
-    "_id": "de2ae16c-c8b9-4918-aa02-b0b134b5dcd8",
-    "business_id": "97004643-988f-4dc4-9860-29f14d2cc2a3",
-    "title": "סוף עונת התפוזים",
-    "short_text": "מבצע על כל התפוזים",
-    "promo_text": "תפוזים קילו ב5 ש\"ח",
-    "image_path": "uploads/Gemini_Generated_Image_rnw0jrrnw0jrrnw0-1768501250804-14731f16360a.png",
-    "start_time": "2020-01-15T18:00:00.000Z",
-    "end_time": "2026-01-15T22:00:00.000Z",
-    "stop_time": null,
-    "status": "active",
-    "created_at": "2026-01-15T18:20:50.834Z",
-    "updated_at": "2026-01-15T18:20:50.834Z"
+    "created_at": "2026-01-20T12:59:19.105Z",
+    "updated_at": "2026-01-20T12:59:19.105Z"
   }
 ]
