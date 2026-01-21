@@ -26,6 +26,10 @@ async function getActiveAds() {
 setInterval(async () => {
   try {
     const ads = await getActiveAds();
+    console.log(`📊 Found ${ads.length} active ads at ${new Date().toISOString()}`);
+    if (ads.length > 0) {
+      console.log('Active ad IDs:', ads.map(a => a._id));
+    }
 
     // Always send to NoviSign every 5 seconds
     if (!ads || ads.length === 0) {

@@ -57,8 +57,6 @@ class AdvertisementModel {
       _id: this._id,
       business_id: this.business_id,
       title: this.title,
-      short_text: this.short_text,
-      promo_text: this.promo_text,
       image_path: this.image_path,
       start_time: this.start_time,
       end_time: this.end_time,
@@ -74,7 +72,14 @@ class AdvertisementModel {
       advertisements.push(adData);
     }
 
+    console.log("addAd: saving ad: " + JSON.stringify(adData, null, 2));
+    console.log("addAd: Number of ads: " + ads.length);
+
     writeData(FILENAME, advertisements);
+
+    console.log("addAd: saved ad: " + JSON.stringify(adData, null, 2));
+    console.log("addAd: Number of ads: " + advertisements.length);
+    
     return this;
   }
 
